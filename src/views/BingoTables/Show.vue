@@ -1,6 +1,6 @@
 <template>
     <div class="table-bingo-container">
-        <h3 class="my-5">Detalle de cartón {{ current_table }}</h3>
+        <h3 class="my-5">Detalle de cartón {{ number_table }}</h3>
         <div class="table-bingo">
             <div class="box">
                 <v-text-field :readonly="true" v-model="form.b1"></v-text-field>
@@ -206,7 +206,6 @@
             return {
                 form,
                 number_table,
-                current_table: +router.currentRoute.value.params.id,
             }
         }
     });

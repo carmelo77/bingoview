@@ -53,7 +53,7 @@ export default defineComponent({
 
     const { logout, autologin, getUser } = useAuth();
 
-    const nameApp = "BINGOS POC-COL LITOGRAFIA";
+    const nameApp = "BINGOS POP-COL LITOGRAFIA";
     const nitApp = "1061734032-9";
     const whatsAppContact = "3245101905-3215234185"
 
