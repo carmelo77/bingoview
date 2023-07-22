@@ -139,7 +139,7 @@ export default defineComponent({
       let headers = { Authorization: getToken.value };
 
       try {
-          const response = await api.get(`bingo-cards/one?id=${id}`, {
+          const response = await api.get(`bingo-cards/number-table?number_card=${id}`, {
               headers,
           });
 
