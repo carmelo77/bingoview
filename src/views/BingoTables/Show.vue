@@ -229,5 +229,14 @@
         border-radius: 12px;
         box-shadow: 2px 2px 3px 2px #cdc1c1;
         gap: 1em;
+        background: url('../../assets/background2.jpg');
+        background-size: cover;
+        object-fit: cover;
+        background-repeat: no-repeat;
+    }
+
+    .box .v-text-field {
+      font-weight: bold;
+      color: #FFF;
     }
 </style>

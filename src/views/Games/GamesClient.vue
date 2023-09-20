@@ -3,7 +3,16 @@
       <h3>Juegos de bingo en proceso</h3>
       <br />
       <v-row>
-        <v-col cols="11">
+        <v-col cols="1">
+          <div class="bingo-letters-vertical">
+            <span>B</span>
+            <span>I</span>
+            <span>N</span>
+            <span>G</span>
+            <span>O</span>
+          </div>
+        </v-col>
+        <v-col cols="9">
           <table class="number-table" cellpadding="2" cellspacing="2" border="1">
             <tr>
               <td 
@@ -34,13 +43,12 @@
           </div>
         </v-col>
         <v-col cols="1">
-          <div class="bingo-letters-vertical">
-            <span>B</span>
-            <span>I</span>
-            <span>N</span>
-            <span>G</span>
-            <span>O</span>
-          </div>
+        <img 
+            class="img-bingo"
+            :src="require('@/assets/' + typeCardWinner + '.jpg')"
+            v-if="typeCardWinner"
+            :alt="`bingo-${typeCardWinner}`"
+          >
         </v-col>
       
     </v-row>
@@ -80,6 +88,8 @@
       const { getToken } = useAuth();
       const router = useRouter();
       const socket = io(baseURL);
+
+      const typeCardWinner = ref<number | null>(null);
 
       const allNumbersBingo = [
       { value: 1, found: false },
@@ -172,9 +182,9 @@
         }
       };
   
-      const handleMatchSelection = async ( id: number ) => {
-        await getNumbersByMatch();
-      }
+      // const handleMatchSelection = async ( id: number ) => {
+      //   await getNumbersByMatch();
+      // }
 
     //   const numbersBingoWithMatch = computed(() => {
     //   const numbers = [...allNumbersBingo];
@@ -215,7 +225,7 @@
 
         getNumbersByMatch();
 
-        socket.on("NewBingoNumberByMatch", ({ number }) => {
+        socket.on("NewBingoNumberByMatch", ({ number, typeCard }) => {
             if(numberByMatch.value.length == 0) {
                 // const find = matches.value.find((item: any) => item.id == matchId);
 
@@ -225,6 +235,8 @@
                     text: `Un nuevo juego de bingo ha comenzado, ¡preparate!.`,
                 });
             }
+
+            typeCardWinner.value = typeCard;
 
             // if (selectedMatch.value == matchId) {
                 const lastNumber = numberByMatch.value[0]; // Obtiene el último número de la lista
@@ -238,11 +250,32 @@
             // }
         });
 
+        socket.on("deleteWrongNumber", ({ number }) => {
+          const oldNumbers = numberByMatch.value.filter( item => item.number !== number );
+            numberByMatch.value = oldNumbers;
+
+            const findIndex = numbersBingoWithMatch.value.findIndex((item: any) => item.value == number);
+            if(findIndex != -1) {
+              numbersBingoWithMatch.value[findIndex].found = false;
+            }
+        });
+
+        socket.on("resetAll", () => {
+          Swal.fire({
+            icon: 'info',
+            title: 'Notificación!',
+            text: 'Se reseteado la partida actual.',
+          });
+          router.push("/");
+        });
+
         socket.on("BingoNumberWin", ({ number }) => {
             // const find = matches.value.find((item: any) => item.id == matchId);
 
             Swal.fire({
-                icon: 'success',
+                imageUrl: require('@/assets/' + typeCardWinner.value + '.jpg'),
+                imageWidth: 400,
+                imageHeight: 200,
                 title: '¡La partida ha culminado!',
                 text: `¡El juego acaba de terminar! verifica si estás entre los ganadores.`,
             });
@@ -251,9 +284,9 @@
   
       return {
         getNumbersByMatch,
-        handleMatchSelection,
         numberByMatch,
-        numbersBingoWithMatch
+        numbersBingoWithMatch,
+        typeCardWinner
       };
     },
   });
@@ -355,7 +388,7 @@
     font-size: 18px;
     font-weight: 900;
     color: #333;
-    padding: 20px;
+    padding: 31px;
   }
 
   .bingo-letters-vertical span:nth-child(1) {
@@ -402,5 +435,10 @@
     font-size: 24px;
     color: #D32F2F;
     box-shadow: 2px 3px 3px #333;
+  }
+
+  .img-bingo {
+    margin-top: 8em;
+    width: 170px;
   }
 </style>

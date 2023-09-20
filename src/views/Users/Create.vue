@@ -29,6 +29,15 @@
           <v-label for="password">Password</v-label>
           <v-text-field type="password" v-model="form.password"></v-text-field>
         </v-col>
+
+        <v-col cols="6">
+          <v-label for="phone">Desde cartón Número: </v-label>
+          <v-text-field type="text" v-model="form.from"></v-text-field>
+        </v-col>
+        <v-col cols="6">
+          <v-label for="phone">Hasta cartón Número: </v-label>
+          <v-text-field type="text" v-model="form.to"></v-text-field>
+        </v-col>
       </v-row>
 
       <v-row>
@@ -72,6 +81,8 @@ interface IFormMatch {
   phone: string;
   document: string;
   password: string;
+  from?: number | null;
+  to?: number | null;
   role_id: number | null;
 }
 
@@ -88,6 +99,8 @@ export default defineComponent({
       phone: "",
       document: "",
       password: "",
+      from: null,
+      to: null,
       role_id: null,
     });
 
@@ -114,12 +127,15 @@ export default defineComponent({
         const response = await api.get(`users/one?id=${id}`, {
           headers,
         });
+        
         form.value.name = response.data.name;
         form.value.lastname = response.data.lastname;
         form.value.email = response.data.email;
         form.value.phone = response.data.phone;
         form.value.document = response.data.document;
         form.value.role_id = response.data.role.id;
+        form.value.from = response.data.from;
+        form.value.to = response.data.to;
       } catch (err) {
         console.log(err);
       }
