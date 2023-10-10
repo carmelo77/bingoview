@@ -1,1 +1,1 @@
-export const baseURL = 'https://api.bingoscolombia.cloud';
+export const baseURL = 'http://localhost:3050';

@@ -382,6 +382,7 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
     font-weight: 800;
+    font-size: 19px;
   }
 
   .number-table tr:nth-child(15n + 1) {
