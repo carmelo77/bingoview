@@ -2,12 +2,33 @@
   <v-container>
     <h3>Juegos de bingo</h3>
     <v-row class="my-2">
-      <v-col cols="12">
+      <v-col cols="6">
         <v-text-field v-model="bingoNumber" label="Nuevo número" @keyup.enter="storeNumberByMatch"></v-text-field>
       </v-col>
+      <v-col cols="6">
+          <v-select
+            v-model="typeCardWinner"
+            :items="typesCard"
+            label="Seleccione un tipo de cartón ganador"
+            item-value="id"
+            item-title="name"
+            @update:modelValue="changeDefault($event)"
+            :disabled="numberByMatch.length > 0 ? true : false"
+          >
+          </v-select>
+        </v-col>
     </v-row>
     <v-row>
-      <v-col cols="11">
+      <v-col cols="1">
+        <div class="bingo-letters-vertical">
+          <span>B</span>
+          <span>I</span>
+          <span>N</span>
+          <span>G</span>
+          <span>O</span>
+        </div>
+      </v-col>
+      <v-col cols="9">
         <table class="number-table" cellpadding="4" cellspacing="4" border="1">
           <tr>
             <td 
@@ -18,6 +39,7 @@
               : num.value >= 31 && num.value <= 45 && num.found ? 'background-color: #80CBC4;' 
               : num.value >= 46 && num.value <= 60 && num.found ? 'background-color: #9575CD;' 
               : num.value >= 60 && num.value <= 75 && num.found ? 'background-color: #FFEE58;' : '#D32F2F' "
+              @click="deleteLastNumber(num)"
             >
               {{ num.value }}
             </td>
@@ -41,13 +63,12 @@
         </div>
       </v-col>
       <v-col cols="1">
-        <div class="bingo-letters-vertical">
-          <span>B</span>
-          <span>I</span>
-          <span>N</span>
-          <span>G</span>
-          <span>O</span>
-        </div>
+        <img 
+          class="img-bingo"
+          :src="require('@/assets/' + typeCardWinner + '.jpg')"
+          v-if="typeCardWinner"
+          :alt="`bingo-${typeCardWinner}`"
+        >
       </v-col>
     </v-row>
   </v-container>
@@ -80,6 +101,8 @@ export default defineComponent({
     const numberByMatch = ref<NumbersMatch[]>([]);
     const bingoNumber = ref<number>(0);
     const isMatchNew = ref<boolean>(false);
+    const typeCardWinner = ref<number | null>(null);
+    const typesCard = ref(<any[]>[]);
 
     const { getToken } = useAuth();
     const router = useRouter();
@@ -172,6 +195,7 @@ export default defineComponent({
 
       if (!result.isConfirmed) return false;
 
+      const socket = io(baseURL);
       let headers = { Authorization: getToken.value };
 
       try {
@@ -181,10 +205,29 @@ export default defineComponent({
           title: 'Bien!',
           text: 'Has reseteado correctamente esta partida.',
         });
+        socket.emit('resetAll');
         router.push("/");
       } catch (err) {
         console.log(err);
         matches.value = [];
+      }
+    };
+
+    const deleteLastNumber = async (num: any) => {
+
+      if(!num.found) {
+        return false;
+      }
+
+      const socket = io(baseURL);
+      let headers = { Authorization: getToken.value };
+
+      try {
+        await api.get(`bingo-number/delete-number/${num.value}`, { headers });
+        socket.emit('deleteWrongNumber', num.value);
+        getNumbersByMatch();
+      } catch (err) {
+        console.log(err);
       }
     };
 
@@ -220,13 +263,15 @@ export default defineComponent({
         const response = await api.post(`bingo-number`, data,{ headers });
 
         // Emitir el evento al servidor de socket
-        socket.emit("NewBingoNumberByMatch", { number: bingoNumber.value });
+        socket.emit("NewBingoNumberByMatch", { number: bingoNumber.value, typeCard: typeCardWinner.value });
 
         bingoNumber.value = 0;
 
         if(response.data.success) {
           Swal.fire({
-            icon: 'success',
+            imageUrl: require('@/assets/' + typeCardWinner.value + '.jpg'),
+            imageWidth: 400,
+            imageHeight: 200,
             title: 'Bingo!',
             text: response.data.message,
           });
@@ -267,8 +312,39 @@ export default defineComponent({
       return numbers;
     });
 
+    const getTypesCardWinner = async () => {
+      let headers = { Authorization: getToken.value };
+
+      try {
+        const response = await api.get("type-card-winner/data", { headers });
+        typeCardWinner.value = response.data.find( (item: any) => item.default )?.id;
+        typesCard.value = response.data;
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    const changeDefault = async (item: number) => {
+      let headers = { Authorization: getToken.value };
+
+      try {
+        await api.get(
+          `type-card-winner/activate?id=${item}`,
+          { headers }
+        );
+      } catch (err: any) {
+        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: err.response.data.message,
+        });
+      }
+    };
+
     onMounted(() => {
       getNumbersByMatch();
+      getTypesCardWinner();
     });
 
     return {
@@ -281,7 +357,11 @@ export default defineComponent({
       allNumbersBingo,
       numbersBingoWithMatch,
       isMatchNew,
-      resetMatch
+      resetMatch,
+      typeCardWinner,
+      typesCard,
+      changeDefault,
+      deleteLastNumber
     };
   },
 });
@@ -302,6 +382,7 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
     font-weight: 800;
+    font-size: 19px;
   }
 
   .number-table tr:nth-child(15n + 1) {
@@ -431,5 +512,10 @@ export default defineComponent({
     font-size: 24px;
     color: #D32F2F;
     box-shadow: 2px 3px 3px #333;
+  }
+
+  .img-bingo {
+    margin-top: 8em;
+    width: 170px;
   }
 </style>
