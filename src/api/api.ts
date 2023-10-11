@@ -3,7 +3,7 @@ import type { AxiosInstance } from 'axios'
 import { baseURL } from './baseURL';
 
 const api: AxiosInstance = axios.create({
-  baseURL: baseURL, // Reemplaza con la URL base de tu API
+  baseURL, // Reemplaza con la URL base de tu API
   // Agrega aquí cualquier otra configuración de Axios que desees usar globalmente
 });
 
