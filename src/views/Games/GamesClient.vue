@@ -39,7 +39,7 @@
               <span>O</span>
             </div>
            -->
-           <img src="../../assets/horizontal.png" alt="horizontal-bingo" width="240">
+           <img src="../../assets/horizontal.png" alt="horizontal-bingo" width="300">
             <div class="circle-last-number" v-if="numberByMatch.length">
               {{ numberByMatch[0].number  }}
             </div>
@@ -438,6 +438,7 @@
     font-weight: 700;
     font-size: 24px;
     color: #D32F2F;
+    background: #FFF;
     box-shadow: 2px 3px 3px #333;
   }
 

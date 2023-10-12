@@ -58,7 +58,7 @@
             <span>G</span>
             <span>O</span>
           </div> -->
-          <img src="../../assets/horizontal.png" alt="horizontal-bingo" width="240">
+          <img src="../../assets/horizontal.png" alt="horizontal-bingo" width="300">
           <div class="circle-last-number" v-if="numberByMatch.length">
             {{ numberByMatch[0].number  }}
           </div>
@@ -263,11 +263,13 @@ export default defineComponent({
 
       try {
         // Emitir el evento al servidor de socket
-        numberByMatch.value.unshift({ 
-          id: numberByMatch.value.length ? numberByMatch.value[0].id + 1 : 1, 
-          number: Number(bingoNumber.value),
-          created_at: new Date().toISOString() 
-        });
+        if(!numberByMatch.value.some(item => item.number == bingoNumber.value)) {
+          numberByMatch.value.unshift({ 
+            id: numberByMatch.value.length ? numberByMatch.value[0].id + 1 : 1, 
+            number: Number(bingoNumber.value),
+            created_at: new Date().toISOString() 
+          });
+        }
         const response = await api.post(`bingo-number`, data,{ headers });
         
         socket.emit("NewBingoNumberByMatch", { number: bingoNumber.value, typeCard: typeCardWinner.value });
@@ -517,6 +519,7 @@ export default defineComponent({
     font-weight: 700;
     font-size: 24px;
     color: #D32F2F;
+    background: #FFF;
     box-shadow: 2px 3px 3px #333;
   }
 
