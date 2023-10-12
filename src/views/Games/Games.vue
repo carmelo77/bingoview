@@ -20,13 +20,14 @@
     </v-row>
     <v-row>
       <v-col cols="1">
-        <div class="bingo-letters-vertical">
+        <!-- <div class="bingo-letters-vertical">
           <span>B</span>
           <span>I</span>
           <span>N</span>
           <span>G</span>
           <span>O</span>
-        </div>
+        </div> -->
+        <img src="../../assets/vertical.png" alt="vertical-bingo" width="70">
       </v-col>
       <v-col cols="9">
         <table class="number-table" cellpadding="4" cellspacing="4" border="1">
@@ -50,13 +51,14 @@
           <div>
             <v-btn color="error" @click="resetMatch()">reset</v-btn>
           </div>
-          <div class="bingo-letters">
+          <!-- <div class="bingo-letters">
             <span>B</span>
             <span>I</span>
             <span>N</span>
             <span>G</span>
             <span>O</span>
-          </div>
+          </div> -->
+          <img src="../../assets/horizontal.png" alt="horizontal-bingo" width="240">
           <div class="circle-last-number" v-if="numberByMatch.length">
             {{ numberByMatch[0].number  }}
           </div>
@@ -195,7 +197,7 @@ export default defineComponent({
 
       if (!result.isConfirmed) return false;
 
-      const socket = io(baseURL);
+      const socket = io(baseURL, {transports: ['websocket']});
       let headers = { Authorization: getToken.value };
 
       try {
@@ -219,7 +221,7 @@ export default defineComponent({
         return false;
       }
 
-      const socket = io(baseURL);
+      const socket = io(baseURL, {transports: ['websocket']});
       let headers = { Authorization: getToken.value };
 
       try {
@@ -244,7 +246,7 @@ export default defineComponent({
 
     const storeNumberByMatch = async ( id: number ) => {
       let headers = { Authorization: getToken.value };
-      const socket = io(baseURL);
+      const socket = io(baseURL, {transports: ['websocket']});
 
       if(bingoNumber.value == 0 || bingoNumber.value > 75) {
         Swal.fire({
@@ -260,11 +262,15 @@ export default defineComponent({
       }
 
       try {
-        const response = await api.post(`bingo-number`, data,{ headers });
-
         // Emitir el evento al servidor de socket
+        numberByMatch.value.unshift({ 
+          id: numberByMatch.value.length ? numberByMatch.value[0].id + 1 : 1, 
+          number: Number(bingoNumber.value),
+          created_at: new Date().toISOString() 
+        });
+        const response = await api.post(`bingo-number`, data,{ headers });
+        
         socket.emit("NewBingoNumberByMatch", { number: bingoNumber.value, typeCard: typeCardWinner.value });
-
         bingoNumber.value = 0;
 
         if(response.data.success) {
@@ -279,7 +285,7 @@ export default defineComponent({
           socket.emit("BingoNumberWin", { number: bingoNumber.value });
         }
 
-        getNumbersByMatch();
+        // getNumbersByMatch();
 
       } catch (err: any) {
         console.log(err);

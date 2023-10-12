@@ -4,13 +4,14 @@
       <br />
       <v-row>
         <v-col cols="1">
-          <div class="bingo-letters-vertical">
+          <!-- <div class="bingo-letters-vertical">
             <span>B</span>
             <span>I</span>
             <span>N</span>
             <span>G</span>
             <span>O</span>
-          </div>
+          </div> -->
+          <img src="../../assets/vertical.png" alt="vertical-bingo" width="70">
         </v-col>
         <v-col cols="9">
           <table class="number-table" cellpadding="2" cellspacing="2" border="1">
@@ -30,13 +31,15 @@
           </table>
           <div class="mt-8 info--bingo">
             <div class="text-red">{{ numberByMatch.length }} de 75</div>
-            <div class="bingo-letters">
+            <!-- <div class="bingo-letters">
               <span>B</span>
               <span>I</span>
               <span>N</span>
               <span>G</span>
               <span>O</span>
             </div>
+           -->
+           <img src="../../assets/horizontal.png" alt="horizontal-bingo" width="240">
             <div class="circle-last-number" v-if="numberByMatch.length">
               {{ numberByMatch[0].number  }}
             </div>
@@ -87,7 +90,7 @@
   
       const { getToken } = useAuth();
       const router = useRouter();
-      const socket = io(baseURL);
+      const socket = io(baseURL, {transports: ['websocket']});
 
       const typeCardWinner = ref<number | null>(null);
 

@@ -16,7 +16,7 @@
       :isAdmin="isAdmin"
       :isNormal="isNormal"
     />
-    <v-main app>
+    <v-main app class="body">
       <v-container fluid>
         <router-view />
       </v-container>
@@ -90,6 +90,14 @@ export default defineComponent({
 </script>
 
 <style scoped>
+
+.body {
+    background-image: url("./assets/fondo.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    color: #FFF;
+  }
   .logo {
     width: 7rem;
     border-radius: 12px;

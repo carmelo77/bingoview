@@ -39,7 +39,7 @@
                 <v-text-field class="text-field" :readonly="true" v-model="form.i3"></v-text-field>
             </div>
             <div class="box mt-7 font-weight-bold">
-                <v-text-field class="text-field" :readonly="true" v-model="number_table" label="Nro de tabla"></v-text-field>
+                <v-text-field class="text-field-serie" :readonly="true" v-model="number_table" label="Nro de serie"></v-text-field>
             </div>
             <div class="box">
                 <v-text-field class="text-field" :readonly="true" v-model="form.g3"></v-text-field>
@@ -243,5 +243,9 @@
 
     .text-field >>> .v-input__control input {
         font-size: 24px; /* Ajusta el tamaño de fuente según tus necesidades */ 
+    }
+    .text-field-serie >>> .v-input__control input {
+        font-size: 24px; /* Ajusta el tamaño de fuente según tus necesidades */ 
+        width: 10em;
     }
 </style>

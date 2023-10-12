@@ -146,6 +146,17 @@ export default defineComponent({
 
       let headers = { Authorization: getToken.value };
 
+      if(form.value.from && form.value.to) {
+        if(Number(form.value.from) > Number(form.value.to)) {
+          Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text: "El campo desde no puede ser mayor.",
+          });
+          return;
+        }
+      }
+
       if (isCreateForm.value) {
         await createUser(headers);
       } else {

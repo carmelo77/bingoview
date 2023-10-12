@@ -10,83 +10,83 @@
   <div class="table-bingo-container" v-if="number_table">
     <div class="table-bingo">
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.b1"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.b1"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.i1"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.i1"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.n1"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.n1"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.g1"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.g1"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.o1"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.o1"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.b2"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.b2"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.i2"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.i2"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.n2"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.n2"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.g2"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.g2"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.o2"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.o2"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.b3"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.b3"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.i3"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.i3"></v-text-field>
       </div>
       <div class="box mt-7 font-weight-bold">
         <v-text-field
-          clas="text-field" :readonly="true"
+          class="text-field-serie" :readonly="true"
           v-model="number_table"
           label="Nro de tabla"
         ></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.g3"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.g3"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.o3"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.o3"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.b4"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.b4"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.i4"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.i4"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.n4"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.n4"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.g4"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.g4"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.o4"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.o4"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.b5"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.b5"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.i5"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.i5"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.n5"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.n5"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.g5"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.g5"></v-text-field>
       </div>
       <div class="box">
-        <v-text-field clas="text-field" :readonly="true" v-model="form.o5"></v-text-field>
+        <v-text-field class="text-field" :readonly="true" v-model="form.o5"></v-text-field>
       </div>
     </div>
   </div>
@@ -231,5 +231,9 @@ export default defineComponent({
 
     .text-field >>> .v-input__control input {
         font-size: 24px; /* Ajusta el tamaño de fuente según tus necesidades */ 
+    }
+    .text-field-serie >>> .v-input__control input {
+        font-size: 24px; /* Ajusta el tamaño de fuente según tus necesidades */ 
+        width: 10em;
     }
 </style>
