@@ -310,6 +310,8 @@
     justify-content: center;
     font-weight: 800;
     font-size: 19px;
+    background: #FFF;
+    color: #333;
   }
 
 
@@ -321,10 +323,10 @@
    page-break-inside: avoid;
  }
 
- .cell-color {
+ /* .cell-color {
    background: #D32F2F;
    color: #FFF;
- }
+ } */
 
  @media print {
    .number-table {

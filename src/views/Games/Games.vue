@@ -3,7 +3,12 @@
     <h3>Juegos de bingo</h3>
     <v-row class="my-2">
       <v-col cols="6">
-        <v-text-field v-model="bingoNumber" label="Nuevo número" @keyup.enter="storeNumberByMatch"></v-text-field>
+        <v-text-field 
+          v-model="bingoNumber" 
+          label="Nuevo número" 
+          class="bg-white"
+          @keyup.enter="storeNumberByMatch"
+        ></v-text-field>
       </v-col>
       <v-col cols="6">
           <v-select
@@ -12,6 +17,7 @@
             label="Seleccione un tipo de cartón ganador"
             item-value="id"
             item-title="name"
+            class="bg-white"
             @update:modelValue="changeDefault($event)"
             :disabled="numberByMatch.length > 0 ? true : false"
           >
@@ -47,7 +53,11 @@
           </tr>
         </table>
         <div class="mt-8 info--bingo">
-          <div class="text-red">{{ numberByMatch.length }} de 75</div>
+          <div class="text-white">
+            <v-btn color="error" readonly>
+              {{ numberByMatch.length }} de 75
+            </v-btn>
+          </div>
           <div>
             <v-btn color="error" @click="resetMatch()">reset</v-btn>
           </div>
@@ -391,6 +401,8 @@ export default defineComponent({
     justify-content: center;
     font-weight: 800;
     font-size: 19px;
+    background: #FFF;
+    color: #333;
   }
 
   .number-table tr:nth-child(15n + 1) {
@@ -401,10 +413,10 @@ export default defineComponent({
     page-break-inside: avoid;
   }
 
-  .cell-color {
-    /* background: #D32F2F; */
+  /* .cell-color {
+    background: #D32F2F;
     color: #FFF;
-  }
+  } */
 
   @media print {
     .number-table {
