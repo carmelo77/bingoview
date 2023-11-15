@@ -231,9 +231,15 @@ export default defineComponent({
 
     .text-field >>> .v-input__control input {
         font-size: 24px; /* Ajusta el tamaño de fuente según tus necesidades */ 
+        background-color: #FFF;
+        color: #333;
+        text-align: center;
     }
     .text-field-serie >>> .v-input__control input {
         font-size: 24px; /* Ajusta el tamaño de fuente según tus necesidades */ 
         width: 10em;
+        background-color: #FFF;
+        color: #333;
+        text-align: center;
     }
 </style>
